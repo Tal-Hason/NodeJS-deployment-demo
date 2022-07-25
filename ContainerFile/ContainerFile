@@ -8,7 +8,7 @@ WORKDIR /tmp
 # where available (npm@5+)
 COPY src/package*.json ./
 
-RUN npm install
+RUN npm install && npm audit fix
 # If you are building your code for production
 # RUN npm ci --only=production
 
