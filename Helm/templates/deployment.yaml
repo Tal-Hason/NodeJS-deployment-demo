@@ -26,11 +26,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "nodejs.serviceAccountName" . }}
-      volumes:
-        - name: app-js
-          configMap:
-            name: app.js
-            defaultMode: 0777
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -38,10 +33,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-            - name: app-js
-              mountPath: /tmp          
+          imagePullPolicy: {{ .Values.image.pullPolicy }}  
           ports:
             - name: http
               containerPort: 8080
