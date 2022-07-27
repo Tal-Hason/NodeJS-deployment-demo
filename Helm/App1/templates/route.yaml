@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "nodejs.labels" . | nindent 4 }}
 spec:
-  host: nodejs-demo-hello-world.apps-crc.testing
+  host: nodejs-demo-hello-world-1.apps-crc.testing
   to:
     kind: Service
     name: {{ include "nodejs.fullname" . }}

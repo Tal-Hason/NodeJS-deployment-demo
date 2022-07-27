@@ -11,8 +11,8 @@ image:
   tag: ""
 
 imagePullSecrets: []
-nameOverride: "nodejs-demo-app"
-fullnameOverride: "node-hello-world"
+nameOverride: "nodejs-demo-app-1"
+fullnameOverride: "node-hello-world-1"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -21,7 +21,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "nodejs-sa"
+  name: "nodejs-sa-1"
 
 podAnnotations: {}
 
