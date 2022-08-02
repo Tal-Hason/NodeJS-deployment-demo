@@ -8,7 +8,7 @@ WORKDIR /tmp
 # where available (npm@5+)
 COPY src/package*.json ./
 
-RUN dnf update -y && dnf clean all
+RUN sudo dnf update -y && sudo dnf clean all
 # update the base image
 RUN npm install && npm audit fix
 # If you are building your code for production
