@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nodejs
+spec:
+  destination:
+    name: ''
+    namespace: nodejs-demo
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: Helm
+    repoURL: 'https://github.com/Tal-Hason/NodeJS-deployment-demo.git'
+    targetRevision: app
+  project: nodejs-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
