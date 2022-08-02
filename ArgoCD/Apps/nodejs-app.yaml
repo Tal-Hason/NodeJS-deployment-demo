@@ -5,13 +5,13 @@ metadata:
   namespace: openshift-gitops
 spec:
   destination:
-    namespace: xxxNameSpacexxx
+    namespace: nodejs-demo
     server: 'https://kubernetes.default.svc'
   project: nodejs-demo
   source:
     path: ./Helm
-    repoURL: xxxRepoUrlxxx
-    targetRevision: xxxBranchxxx
+    repoURL: https://github.com/Tal-Hason/NodeJS-deployment-demo.git
+    targetRevision: app
   syncPolicy:
     automated:
       prune: true
