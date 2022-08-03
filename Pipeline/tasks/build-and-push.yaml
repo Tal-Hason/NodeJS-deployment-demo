@@ -66,6 +66,7 @@ spec:
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
           
           cd ContainerFile
+          
           echo "Pushing Image to Repository"
 
           podman build --tag $(params.image_name):$(params.tag) .
