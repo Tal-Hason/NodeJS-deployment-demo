@@ -33,6 +33,12 @@ spec:
       description: Full reposrepository Name
       name: git-full-url
       type: string
+    - default: nodejs-app
+      name: project-name
+      type: string
+    - default: nodejs
+      name: application-name
+      type: string
   steps:
     - args:
         - '-c'
@@ -55,7 +61,9 @@ spec:
 
           git remote set-url origin
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
-
+          
+          sed -i 's/xxxAppNamexxx/$(params.application-name)/g'
+          
           sed -i 's/xxxNameSpacexxx/$(params.namespace)/g'
           ArgoCD/nodejs-app.yaml
 
@@ -63,6 +71,8 @@ spec:
           ArgoCD/nodejs-app.yaml
 
           sed -i 's/xxxBranchxxx/$(params.branch)/g' ArgoCD/nodejs-app.yaml
+
+          sed -i 's/xxxProjectNamexxx/$(params.project-name)/g' ArgoCD/nodejs-app.yaml
 
           cp ArgoCD/nodejs-app.yaml ArgoCD/depolys/Apps/nodejs-app.yaml
 

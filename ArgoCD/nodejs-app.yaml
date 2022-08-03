@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nodejs
+  name: xxxAppNamexxx
   namespace: openshift-gitops
 spec:
   destination:
     namespace: xxxNameSpacexxx
     server: 'https://kubernetes.default.svc'
-  project: nodejs-demo
+  project: xxxProjectNamexxx
   source:
     path: ./Helm
     repoURL: xxxRepoUrlxxx

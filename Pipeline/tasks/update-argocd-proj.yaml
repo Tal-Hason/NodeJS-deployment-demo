@@ -19,8 +19,11 @@ spec:
     - default: latest
       name: tag
       type: string
-    - default: app
+    - default: main
       name: branch
+      type: string
+    - default: nodejs-app
+      name: project-name
       type: string
     - default: git-user
       name: git-secret-name
@@ -57,18 +60,16 @@ spec:
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
 
           sed -i 's/xxxNameSpacexxx/$(params.namespace)/g'
-          ArgoCD/nodejs-app.yaml
+          ArgoCD/nodejs-a\proj.yaml
 
-          sed -i 's;xxxRepoUrlxxx;$(params.git-full-url);g'
-          ArgoCD/nodejs-app.yaml
+          sed -i 's;xxxProjectNamexxx;$(params.project-name);g'
+          ArgoCD/nodejs-proj.yaml
 
-          sed -i 's/xxxBranchxxx/$(params.branch)/g' ArgoCD/nodejs-app.yaml
-
-          cp ArgoCD/nodejs-app.yaml ArgoCD/depolys/Apps/nodejs-app.yaml
+          cp ArgoCD/nodejs-proj.yaml ArgoCD/depolys/proj/nodejs-proj.yaml
 
           git add .
 
-          git commit -m "Added ArgoCD app to Repo"
+          git commit -m "Added ArgoCD proj to Repo"
 
           git push 
 
