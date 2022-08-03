@@ -101,6 +101,8 @@ spec:
       workspaces:
         - name: workspace
           workspace: workspace
+        - name: output
+          workspace: workspace
     - name: build
       params:
         - name: IMAGE
