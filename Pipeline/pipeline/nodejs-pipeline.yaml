@@ -68,6 +68,9 @@ spec:
     - default: nodejs-app
       name: ARGO_PROJECT
       type: string
+    - default: argocd-application-folder
+      name: APP_OF_APPS
+      type: string
   tasks:
     - name: fetch-repository
       params:
