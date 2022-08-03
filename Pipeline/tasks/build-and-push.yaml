@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: update-argocd-proj
+  name: update-argocd-app
 spec:
   params:
     - default: github.com
@@ -19,11 +19,8 @@ spec:
     - default: latest
       name: tag
       type: string
-    - default: main
+    - default: app
       name: branch
-      type: string
-    - default: nodejs-app
-      name: project-name
       type: string
     - default: git-user
       name: git-secret-name
@@ -35,6 +32,15 @@ spec:
     - default: 'https://github.com/Tal-Hason/NodeJS-deployment-demo.git'
       description: Full reposrepository Name
       name: git-full-url
+      type: string
+    - default: nodejs-app
+      name: project-name
+      type: string
+    - default: nodejs
+      name: application-name
+      type: string
+    - default: quay.io/thason/node-hello-world
+      name: image_name
       type: string
   steps:
     - args:
@@ -58,19 +64,17 @@ spec:
 
           git remote set-url origin
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
-
-          sed -i 's/xxxNameSpacexxx/$(params.namespace)/g' ArgoCD/nodejs-proj.yaml
           
-          sed -i 's;xxxProjectNamexxx;$(params.project-name);g' ArgoCD/nodejs-proj.yaml
+          cd ContainerFile
+          echo "Pushing Image to Repository"
 
-          cp -f ./ArgoCD/nodejs-proj.yaml ./ArgoCD/deploys/Proj
+          podman build --tag $(params.image_name):$(params.tag) .
 
-          git add .
+          echo "Pushing Image to Repository"
 
-          git commit -m "Added ArgoCD proj to Repo"
+          podman push $(params.image_name):$(params.tag)
 
-          git push 
-
+         
       command:
         - /bin/bash
       env:
@@ -85,5 +89,5 @@ spec:
               key: username
               name: $(params.git-secret-name)
       image: 'quay.io/thason/pipeline:latest'
-      name: update-argocd-proj
+      name: update-argocd-app
       resources: {}
