@@ -48,15 +48,13 @@ spec:
           git remote set-url origin
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
 
-          git checkout -b $(params.branch) main
-
           sed -i 's/XXX/$(params.tag)/g' Helm/Chart.yaml
 
           git add .
 
           git commit -m "update Chart image version"
 
-          git push origin -f $(params.branch)
+          git push 
 
           ls -l 
       command:
