@@ -48,7 +48,7 @@ spec:
           git remote set-url origin
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
 
-          sed -i 's/XXX/$(params.tag)/g' Helm/Chart-no-tag > Helm/Chart.yaml
+          sed 's/XXX/$(params.tag)/g' Helm/Chart-no-tag > Helm/Chart.yaml
 
           git add .
 
