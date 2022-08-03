@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: update-argocd-app
+  name: build-and-push
 spec:
   params:
     - default: github.com
@@ -73,8 +73,6 @@ spec:
           echo "Pushing Image to Repository"
 
           podman push $(params.image_name):$(params.tag)
-
-         
       command:
         - /bin/bash
       env:
@@ -89,5 +87,5 @@ spec:
               key: username
               name: $(params.git-secret-name)
       image: 'quay.io/thason/pipeline:latest'
-      name: update-argocd-app
+      name: build-and-push
       resources: {}
