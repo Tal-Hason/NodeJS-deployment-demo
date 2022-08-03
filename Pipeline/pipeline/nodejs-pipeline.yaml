@@ -27,7 +27,7 @@ spec:
     - name: argocd-task-sync-and-wait
       params:
         - name: application-name
-          value: $(params.APP_NAME)
+          value: $(params.APP_OF_APPS)
         - name: revision
           value: HEAD
         - name: flags
