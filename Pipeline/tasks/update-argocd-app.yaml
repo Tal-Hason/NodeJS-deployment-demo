@@ -72,6 +72,8 @@ spec:
 
           sed -i 's/xxxProjectNamexxx/$(params.project-name)/g' ArgoCD/nodejs-app.yaml
 
+          tree
+
           cp ArgoCD/nodejs-app.yaml ArgoCD/depolys/Apps/
 
           git add .

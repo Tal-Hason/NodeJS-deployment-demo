@@ -63,6 +63,8 @@ spec:
           
           sed -i 's;xxxProjectNamexxx;$(params.project-name);g' ArgoCD/nodejs-proj.yaml
           
+          tree
+
           cp ArgoCD/nodejs-proj.yaml ArgoCD/depolys/proj/
 
           git add .
