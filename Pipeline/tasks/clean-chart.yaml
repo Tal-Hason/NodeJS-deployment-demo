@@ -67,9 +67,9 @@ spec:
 
           rm -f ./Helm/Chart.yaml
 
-          rm -f ./ArgoCD/deploys/Proj/*
-          
-          rm -f ./ArgoCD/deploys/Apps/*
+          rm -f ./ArgoCD/deploys/Proj/*.yaml
+
+          rm -f ./ArgoCD/deploys/Apps/*.yaml
 
           git add .
 
