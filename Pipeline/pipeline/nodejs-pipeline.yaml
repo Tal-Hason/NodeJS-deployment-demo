@@ -99,7 +99,7 @@ spec:
         kind: ClusterTask
         name: git-clone
       workspaces:
-        - name: output
+        - name: workspace
           workspace: workspace
     - name: build
       params:
@@ -121,7 +121,7 @@ spec:
         kind: ClusterTask
         name: buildah
       workspaces:
-        - name: output
+        - name: workspace
           workspace: workspace
     - name: update-chart
       params:
