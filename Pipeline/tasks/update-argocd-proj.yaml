@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: update-argocd-app
+  name: update-argocd-proj
 spec:
   params:
     - default: github.com
