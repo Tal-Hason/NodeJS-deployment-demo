@@ -50,8 +50,6 @@ spec:
 
           sed -i 's/XXX/$(params.tag)/g' Helm/Chart-no-tag > Helm/Chart.yaml
 
-           
-
           git add .
 
           git commit -m "update Chart image version"
