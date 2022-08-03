@@ -84,7 +84,7 @@ spec:
         - name: git-secret-name
           value: $(params.SECRET_NAME)
       runAfter:
-        -build-and-push
+        - build-and-push
       taskRef:
         kind: ClusterTask
         name: update-chart
