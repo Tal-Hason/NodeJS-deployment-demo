@@ -95,7 +95,7 @@ spec:
           value: 'true'
         - name: gitInitImage
           value: >-
-            registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8:latest
+            registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8
       runAfter:
         - clean-chart
       taskRef:
