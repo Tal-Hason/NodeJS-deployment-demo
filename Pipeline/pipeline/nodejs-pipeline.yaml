@@ -93,6 +93,8 @@ spec:
           value: $(params.GIT_REVISION)
         - name: deleteExisting
           value: 'true'
+        - name: gitInitImage
+          value: 'quay.io/thason/pipeline:latest'
       runAfter:
         - clean-chart
       taskRef:
@@ -116,7 +118,7 @@ spec:
         - name: FORMAT
           value: docker
         - name: BUILDER_IMAGE
-          value: registry.access.redhat.com/ubi8/buildah:latest
+          value: 'registry.access.redhat.com/ubi8/buildah:latest'
       runAfter:
         - fetch-repository
       taskRef:
