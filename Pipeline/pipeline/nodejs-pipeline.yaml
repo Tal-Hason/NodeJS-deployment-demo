@@ -94,15 +94,14 @@ spec:
         - name: deleteExisting
           value: 'true'
         - name: gitInitImage
-          value: 'quay.io/thason/pipeline:latest'
+          value: >-
+            registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8:latest
       runAfter:
         - clean-chart
       taskRef:
         kind: ClusterTask
         name: git-clone
       workspaces:
-        - name: workspace
-          workspace: workspace
         - name: output
           workspace: workspace
     - name: build
@@ -125,8 +124,6 @@ spec:
         kind: ClusterTask
         name: buildah
       workspaces:
-        - name: workspace
-          workspace: workspace
         - name: source
           workspace: workspace
     - name: update-chart
