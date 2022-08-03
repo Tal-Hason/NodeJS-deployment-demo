@@ -67,11 +67,7 @@ spec:
 
           rm -f ./Helm/Chart.yaml
 
-          touch ./ArgoCD/deploys/Proj/file.yaml
-
           rm -f ./ArgoCD/deploys/Proj/*.yaml
-
-          touch ./ArgoCD/deploys/Apps/file.yaml
 
           rm -f ./ArgoCD/deploys/Apps/*.yaml
 
@@ -95,4 +91,5 @@ spec:
               name: $(params.git-secret-name)
       image: 'quay.io/thason/pipeline:latest'
       name: clean-chart
+      onError: continue
       resources: {}
