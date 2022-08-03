@@ -69,6 +69,42 @@ spec:
       name: ARGO_PROJECT
       type: string
   tasks:
+    - name: fetch-repository
+      params:
+        - name: url
+          value: $(params.GIT_REPO)
+        - name: revision
+          value: $(params.GIT_REVISION)
+        - name: deleteExisting
+          value: 'true'
+      runAfter:
+        - clean-chart
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: build
+      params:
+        - name: IMAGE
+          value: '$(params.IMAGE_NAME):$(params.IMAGE_TAG)'
+        - name: TLSVERIFY
+          value: 'false'
+        - name: CONTEXT
+          value: $(params.PATH_CONTEXT)
+        - name: DOCKERFILE
+          value: /ContainerFile
+        - name: FORMAT
+          value: docker
+      runAfter:
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: workspace
     - name: update-chart
       params:
         - name: git-url-source
@@ -84,7 +120,7 @@ spec:
         - name: git-secret-name
           value: $(params.SECRET_NAME)
       runAfter:
-        - build-and-push
+        - build
       taskRef:
         kind: ClusterTask
         name: update-chart
@@ -140,35 +176,6 @@ spec:
       taskRef:
         kind: ClusterTask
         name: update-argocd-proj
-    - name: build-and-push
-      params:
-        - name: git-url-source
-          value: github.com
-        - name: git-user
-          value: Tal-Hason
-        - name: git-repo-name
-          value: NodeJS-deployment-demo
-        - name: tag
-          value: $(params.IMAGE_TAG)
-        - name: branch
-          value: $(params.GIT_REVISION)
-        - name: git-secret-name
-          value: $(params.SECRET_NAME)
-        - name: namespace
-          value: $(params.NAMESPACE)
-        - name: git-full-url
-          value: $(params.GIT_REPO)
-        - name: project-name
-          value: $(params.ARGO_PROJECT)
-        - name: application-name
-          value: $(params.APP_NAME)
-        - name: image_name
-          value: $(params.IMAGE_NAME)
-      runAfter:
-        - clean-chart
-      taskRef:
-        kind: ClusterTask
-        name: build-and-push
     - name: clean-chart
       params:
         - name: git-url-source
@@ -181,20 +188,16 @@ spec:
           value: $(params.IMAGE_TAG)
         - name: branch
           value: $(params.GIT_REVISION)
+        - name: project-name
+          value: $(params.ARGO_PROJECT)
         - name: git-secret-name
           value: $(params.SECRET_NAME)
         - name: namespace
           value: $(params.NAMESPACE)
         - name: git-full-url
           value: $(params.GIT_REPO)
-        - name: project-name
-          value: $(params.ARGO_PROJECT)
-        - name: application-name
-          value: $(params.APP_NAME)
-        - name: image_name
-          value: $(params.IMAGE_NAME)
       taskRef:
         kind: ClusterTask
-        name: clean-chart
+        name: update-argocd-proj
   workspaces:
     - name: workspace
