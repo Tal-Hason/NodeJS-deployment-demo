@@ -113,6 +113,8 @@ spec:
           value: /ContainerFile
         - name: FORMAT
           value: docker
+        - name: BUILDER_IMAGE
+          value: registry.access.redhat.com/ubi8/buildah:latest
       runAfter:
         - fetch-repository
       taskRef:
