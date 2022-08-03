@@ -67,11 +67,11 @@ spec:
 
           rm -f ./Helm/Chart.yaml
 
-          echo "Some File" > ./ArgoCD/deploys/Proj/file.yaml
+          touch ./ArgoCD/deploys/Proj/file.yaml
 
           rm -f ./ArgoCD/deploys/Proj/*.yaml
 
-          echo "Some File" > ./ArgoCD/deploys/Apps/file.yaml
+          touch ./ArgoCD/deploys/Apps/file.yaml
 
           rm -f ./ArgoCD/deploys/Apps/*.yaml
 
