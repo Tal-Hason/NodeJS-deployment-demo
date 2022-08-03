@@ -17,4 +17,6 @@ spec:
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
+  sourceRepos:
+    - '*'
 status: {}
