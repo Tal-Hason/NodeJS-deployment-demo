@@ -72,7 +72,7 @@ spec:
 
           sed -i 's/xxxProjectNamexxx/$(params.project-name)/g' ArgoCD/nodejs-app.yaml
 
-          cp -f ./ArgoCD/nodejs-app.yaml ./ArgoCD/deploys/Apps:
+          cp -f ./ArgoCD/nodejs-app.yaml ./ArgoCD/deploys/Apps
 
           git add .
 
