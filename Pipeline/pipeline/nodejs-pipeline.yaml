@@ -198,6 +198,6 @@ spec:
           value: $(params.GIT_REPO)
       taskRef:
         kind: ClusterTask
-        name: update-argocd-proj
+        name: clean-chart
   workspaces:
     - name: workspace
