@@ -72,7 +72,7 @@ spec:
 
           sed -i 's/xxxProjectNamexxx/$(params.project-name)/g' ArgoCD/nodejs-app.yaml
 
-          tree
+          ls -lR
 
           cp ArgoCD/nodejs-app.yaml ArgoCD/depolys/Apps/
 
@@ -81,8 +81,7 @@ spec:
           git commit -m "Added ArgoCD app to Repo"
 
           git push 
-
-          ls -l 
+          
       command:
         - /bin/bash
       env:
