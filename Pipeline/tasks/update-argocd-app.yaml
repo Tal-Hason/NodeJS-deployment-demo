@@ -56,8 +56,6 @@ spec:
           git remote set-url origin
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
 
-          git switch $(params.branch)
-
           sed -i 's/xxxNameSpacexxx/$(params.namespace)/g'
           ArgoCD/nodejs-app.yaml
 
@@ -66,13 +64,13 @@ spec:
 
           sed -i 's/xxxBranchxxx/$(params.branch)/g' ArgoCD/nodejs-app.yaml
 
-          mv ArgoCD/nodejs-app.yaml ArgoCD/Apps/nodejs-app.yaml
+          cp ArgoCD/nodejs-app.yaml ArgoCD/Apps/nodejs-app.yaml
 
           git add .
 
           git commit -m "Added ArgoCD app to Repo"
 
-          git push origin -f $(params.branch)
+          git push 
 
           ls -l 
       command:
