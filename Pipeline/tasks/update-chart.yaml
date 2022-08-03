@@ -50,7 +50,7 @@ spec:
 
           sed -i 's/XXX/$(params.tag)/g' Helm/Chart-no-tag
 
-          cp Helm/Chart-no-tag Helm/Chart.yaml
+          cp -f Helm/Chart-no-tag Helm/Chart.yaml
 
           git add .
 
