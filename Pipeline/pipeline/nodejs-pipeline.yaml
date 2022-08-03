@@ -110,7 +110,7 @@ spec:
         - name: CONTEXT
           value: $(params.PATH_CONTEXT)
         - name: DOCKERFILE
-          value: /ContainerFile
+          value: ./ContainerFile
         - name: FORMAT
           value: docker
         - name: BUILDER_IMAGE
@@ -121,7 +121,7 @@ spec:
         kind: ClusterTask
         name: buildah
       workspaces:
-        - name: source
+        - name: output
           workspace: workspace
     - name: update-chart
       params:
