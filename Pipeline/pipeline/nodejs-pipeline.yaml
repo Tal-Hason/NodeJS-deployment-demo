@@ -123,6 +123,8 @@ spec:
       workspaces:
         - name: workspace
           workspace: workspace
+        - name: source
+          workspace: workspace
     - name: update-chart
       params:
         - name: git-url-source
