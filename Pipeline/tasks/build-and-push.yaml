@@ -67,11 +67,7 @@ spec:
           
           cd ContainerFile
           
-          echo "Pushing Image to Repository"
-
           podman build --tag $(params.image_name):$(params.tag) .
-
-          echo "Pushing Image to Repository"
 
           podman push $(params.image_name):$(params.tag)
       command:
