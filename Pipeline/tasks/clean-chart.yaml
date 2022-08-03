@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: update-chart
+  name: clean-chart
 spec:
   params:
     - default: github.com
@@ -24,6 +24,23 @@ spec:
       type: string
     - default: git-user
       name: git-secret-name
+      type: string
+    - default: nodejs-demo
+      description: Where you want the applicaion to deploy
+      name: namespace
+      type: string
+    - default: 'https://github.com/Tal-Hason/NodeJS-deployment-demo.git'
+      description: Full reposrepository Name
+      name: git-full-url
+      type: string
+    - default: nodejs-app
+      name: project-name
+      type: string
+    - default: nodejs
+      name: application-name
+      type: string
+    - default: quay.io/thason/node-hello-world
+      name: image_name
       type: string
   steps:
     - args:
@@ -48,7 +65,7 @@ spec:
           git remote set-url origin
           https://$GIT_TOKEN:x-oauth-basic@$(params.git-url-source)/$(params.git-user)/$(params.git-repo-name).git
 
-          sed 's/XXX/$(params.tag)/g' Helm/Chart-no-tag > Helm/Chart.yaml
+          rm -f ./Helm/Chart.yaml
 
           git add .
 
@@ -69,5 +86,5 @@ spec:
               key: username
               name: $(params.git-secret-name)
       image: 'quay.io/thason/pipeline:latest'
-      name: update-chart-app-ver
+      name: clean-chart
       resources: {}

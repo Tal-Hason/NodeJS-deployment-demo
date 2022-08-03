@@ -174,5 +174,61 @@ spec:
       taskRef:
         kind: ClusterTask
         name: update-argocd-proj
+    - name: build-and-push
+      params:
+        - name: git-url-source
+          value: github.com
+        - name: git-user
+          value: Tal-Hason
+        - name: git-repo-name
+          value: NodeJS-deployment-demo
+        - name: tag
+          value: $(params.IMAGE_TAG)
+        - name: branch
+          value: $(params.GIT_REVISION)
+        - name: git-secret-name
+          value: $(params.SECRET_NAME)
+        - name: namespace
+          value: $(params.NAMESPACE)
+        - name: git-full-url
+          value: $(params.GIT_REPO)
+        - name: project-name
+          value: $(params.ARGO_PROJECT)
+        - name: application-name
+          value: $(params.APP_NAME)
+        - name: image_name
+          value: $(params.IMAGE_NAME)
+      runAfter:
+        - clean-chart
+      taskRef:
+        kind: ClusterTask
+        name: build-and-push
+    - name: clean-chart
+      params:
+        - name: git-url-source
+          value: github.com
+        - name: git-user
+          value: Tal-Hason
+        - name: git-repo-name
+          value: NodeJS-deployment-demo
+        - name: tag
+          value: $(params.IMAGE_TAG)
+        - name: branch
+          value: $(params.GIT_REVISION)
+        - name: git-secret-name
+          value: $(params.SECRET_NAME)
+        - name: namespace
+          value: $(params.NAMESPACE)
+        - name: git-full-url
+          value: $(params.GIT_REPO)
+        - name: project-name
+          value: $(params.ARGO_PROJECT)
+        - name: application-name
+          value: $(params.APP_NAME)
+        - name: image_name
+          value: $(params.IMAGE_NAME)
+      taskRef:
+        kind: ClusterTask
+        name: clean-chart
   workspaces:
     - name: workspace
