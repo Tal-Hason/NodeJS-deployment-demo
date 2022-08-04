@@ -1,0 +1,189 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: node-js-hello-world-demo-5ebon5
+  namespace: nodejs-demo
+  labels:
+    app.kubernetes.io/instance: pipeline-tasks
+    app.kubernetes.io/name: node-js-hello-world-demo
+    pipeline.openshift.io/strategy: docker
+    pipeline.openshift.io/type: kubernetes
+    tekton.dev/pipeline: node-js-hello-world-demo
+spec:
+  params:
+    - name: APP_NAME
+      value: nodejs
+    - name: GIT_REPO
+      value: 'https://github.com/Tal-Hason/NodeJS-deployment-demo.git'
+    - name: GIT_REVISION
+      value: main
+    - name: IMAGE_NAME
+      value: quay.io/thason/node-hello-world
+    - name: PATH_CONTEXT
+      value: .
+    - name: QUAY_IMAGE
+      value: quay.io/thason/node-hello-world
+    - name: IMAGE_TAG
+      value: latest
+    - name: SECRET_NAME
+      value: git-user
+    - name: NAMESPACE
+      value: nodejs-demo
+    - name: ARGO_PROJECT
+      value: nodejs-app
+    - name: APP_OF_APPS
+      value: argocd-application-folder
+  pipelineRef:
+    name: node-js-hello-world-demo
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+    - name: workspace
+      persistentVolumeClaim:
+        claimName: workspace
+status:
+  completionTime: '2022-08-04T10:18:53Z'
+  conditions:
+    - lastTransitionTime: '2022-08-04T10:18:53Z'
+      message: 'Tasks Completed: 7 (Failed: 0, Cancelled 0), Skipped: 0'
+      reason: Succeeded
+      status: 'True'
+      type: Succeeded
+  pipelineSpec:
+    finally:
+      - name: openshift-client
+        params:
+          - name: SCRIPT
+            value: oc get route
+          - name: VERSION
+            value: latest
+        taskRef:
+          kind: ClusterTask
+          name: openshift-client
+        workspaces:
+          - name: kubeconfig-dir
+            workspace: workspace
+          - name: manifest-dir
+            workspace: workspace
+        status:
+          completionTime: '2022-08-04T10:18:53Z'
+          conditions:
+            - lastTransitionTime: '2022-08-04T10:18:53Z'
+              message: All Steps have completed executing
+              reason: Succeeded
+              status: 'True'
+              type: Succeeded
+          podName: node-js-hello-world-demo-5ebon5-openshift-client-pod
+          startTime: '2022-08-04T10:18:47Z'
+          steps:
+            - container: step-oc
+              imageID: >-
+                image-registry.openshift-image-registry.svc:5000/openshift/cli@sha256:ba44dead03ea74107f90d58525106fb52d27a120b73c6cc8e2be31d37043ca1c
+              name: oc
+              terminated:
+                containerID: >-
+                  cri-o://14c9451d138a562237004286a65d94f853d95402debae21f1acd3bd6133260db
+                exitCode: 0
+                finishedAt: '2022-08-04T10:18:52Z'
+                reason: Completed
+                startedAt: '2022-08-04T10:18:52Z'
+          taskSpec:
+            description: >-
+              This task runs commands against the cluster provided by user and
+              if not provided then where the Task is being executed.
+
+              OpenShift is a Kubernetes distribution from Red Hat which provides
+              oc, the OpenShift CLI that complements kubectl for simplifying
+              deployment and configuration applications on OpenShift.
+            params:
+              - default: oc help
+                description: The OpenShift CLI arguments to run
+                name: SCRIPT
+                type: string
+              - default: latest
+                description: The OpenShift Version to use
+                name: VERSION
+                type: string
+            steps:
+              - image: >-
+                  image-registry.openshift-image-registry.svc:5000/openshift/cli:$(params.VERSION)
+                name: oc
+                resources: {}
+                script: |
+                  #!/usr/bin/env bash
+
+                  [[ "$(workspaces.manifest-dir.bound)" == "true" ]] && \
+                  cd $(workspaces.manifest-dir.path)
+
+                  [[ "$(workspaces.kubeconfig-dir.bound)" == "true" ]] && \
+                  [[ -f $(workspaces.kubeconfig-dir.path)/kubeconfig ]] && \
+                  export KUBECONFIG=$(workspaces.kubeconfig-dir.path)/kubeconfig
+
+                  $(params.SCRIPT)
+            workspaces:
+              - description: >-
+                  The workspace which contains kubernetes manifests which we
+                  want to apply on the cluster.
+                name: manifest-dir
+                optional: true
+              - description: >-
+                  The workspace which contains the the kubeconfig file if in
+                  case we want to run the oc command on another cluster.
+                name: kubeconfig-dir
+                optional: true
+          duration: 6s
+          reason: Succeeded
+    params:
+      - default: nodejs
+        name: APP_NAME
+        type: string
+      - default: 'https://github.com/Tal-Hason/NodeJS-deployment-demo.git'
+        name: GIT_REPO
+        type: string
+      - default: main
+        name: GIT_REVISION
+        type: string
+      - default: quay.io/thason/node-hello-world
+        name: IMAGE_NAME
+        type: string
+      - default: .
+        name: PATH_CONTEXT
+        type: string
+      - default: quay.io/thason/node-hello-world
+        name: QUAY_IMAGE
+        type: string
+      - default: latest
+        name: IMAGE_TAG
+        type: string
+      - default: git-user
+        name: SECRET_NAME
+        type: string
+      - default: nodejs-demo
+        name: NAMESPACE
+        type: string
+      - default: nodejs-app
+        name: ARGO_PROJECT
+        type: string
+      - default: argocd-application-folder
+        name: APP_OF_APPS
+        type: string
+    tasks:
+      - name: fetch-repository
+        params:
+          - name: url
+            value: $(params.GIT_REPO)
+          - name: revision
+            value: $(params.GIT_REVISION)
+          - name: deleteExisting
+            value: 'true'
+          - name: gitInitImage
+            value: >-
+              registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8:v1.7.2-11
+        runAfter:
+          - clean-chart
+        taskRef:
+          kind: ClusterTask
+          name: git-clone
+        workspaces:
+          - name: output
+            workspace: workspace
