@@ -63,7 +63,7 @@ spec:
     - default: quay.io/thason/node-hello-world
       name: IMAGE_NAME
       type: string
-    - default: ContainerFile
+    - default: .
       name: PATH_CONTEXT
       type: string
     - default: quay.io/thason/node-hello-world
@@ -113,7 +113,7 @@ spec:
         - name: CONTEXT
           value: $(params.PATH_CONTEXT)
         - name: DOCKERFILE
-          value: ./ContainerFile
+          value: ContainerFile
         - name: FORMAT
           value: docker
         - name: BUILDER_IMAGE
@@ -122,7 +122,7 @@ spec:
         - fetch-repository
       taskRef:
         kind: ClusterTask
-        name: buildah
+        name: build-n-push
       workspaces:
         - name: source
           workspace: workspace
