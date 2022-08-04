@@ -1,7 +1,6 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  resourceVersion: '84471'
   name: argocd-task-sync-refresh-and-wait
 spec:
   description: >-
@@ -42,7 +41,7 @@ spec:
         fi
 
         argocd app get "$(params.application-name)" --hard-refresh 
-        
+
         argocd app sync "$(params.application-name)" --prune --force --revision
         "$(params.revision)" "$(params.flags)"
 
