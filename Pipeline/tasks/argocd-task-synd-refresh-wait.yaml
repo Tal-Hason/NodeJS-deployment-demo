@@ -32,7 +32,7 @@ spec:
     name: ''
     resources: {}
   steps:
-    - image: 'quay.io/argoproj/argocd:$(params.argocd-version)'
+    - image: 'quay.io/thason/pipeline:latest'
       name: login
       resources: {}
       script: >
