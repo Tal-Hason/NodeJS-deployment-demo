@@ -37,7 +37,7 @@ spec:
       taskRef:
         kind: ClusterTask
         name: argocd-task-sync-and-wait
-    - name: argocd-task-sync-app-and-wait
+    - name: argocd-task-sync-refresh-and-wait
       params:
         - name: application-name
           value: $(params.APP_NAME)
@@ -49,7 +49,7 @@ spec:
           value: v2.4.5
       taskRef:
         kind: ClusterTask
-        name: argocd-task-sync-and-wait
+        name: argocd-task-sync-refresh-and-wait
   params:
     - default: nodejs
       name: APP_NAME

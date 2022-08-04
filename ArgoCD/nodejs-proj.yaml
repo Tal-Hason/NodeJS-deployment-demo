@@ -18,5 +18,5 @@ spec:
     - group: '*'
       kind: '*'
   sourceRepos:
-    - '*'
+    - 'xxxRepositoryxxx'
 status: {}
