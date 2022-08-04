@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: node-js-hello-world-demo-5ebon5
+  name: node-js-hello-world-demo-gitrun-1
   namespace: nodejs-demo
   labels:
     app.kubernetes.io/instance: pipeline-tasks
