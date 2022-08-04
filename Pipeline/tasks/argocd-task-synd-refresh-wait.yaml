@@ -37,7 +37,7 @@ spec:
       resources: {}
       script: >
         if [ -z "$ARGOCD_AUTH_TOKEN" ]; then
-          yes | argocd login "$ARGOCD_SERVER" --core;
+          yes | argocd login "$ARGOCD_SERVER" --core --insecure;
         fi
 
         argocd app get "$(params.application-name)" --hard-refresh
