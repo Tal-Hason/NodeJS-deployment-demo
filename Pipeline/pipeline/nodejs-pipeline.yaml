@@ -24,32 +24,6 @@ spec:
           workspace: workspace
         - name: manifest-dir
           workspace: workspace
-    - name: argocd-task-sync-app-of-apps-and-wait
-      params:
-        - name: application-name
-          value: $(params.APP_OF_APPS)
-        - name: revision
-          value: HEAD
-        - name: flags
-          value: '--'
-        - name: argocd-version
-          value: v2.4.5
-      taskRef:
-        kind: ClusterTask
-        name: argocd-task-sync-and-wait
-    - name: argocd-task-sync-refresh-and-wait
-      params:
-        - name: application-name
-          value: $(params.APP_NAME)
-        - name: revision
-          value: HEAD
-        - name: flags
-          value: '--'
-        - name: argocd-version
-          value: v2.4.5
-      taskRef:
-        kind: ClusterTask
-        name: argocd-task-sync-refresh-and-wait
   params:
     - default: nodejs
       name: APP_NAME
