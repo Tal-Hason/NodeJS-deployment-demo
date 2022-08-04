@@ -63,7 +63,7 @@ spec:
       resources: {}
       script: |
         ls -l $(workspaces.source.path)
-        cd $(workspaces.source.path)\ContainerFile
+        cd $(workspaces.source.path)/ContainerFile
         pwd
       securityContext:
         capabilities:
