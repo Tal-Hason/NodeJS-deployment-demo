@@ -76,9 +76,7 @@ spec:
       name: build
       resources: {}
       script: |
-        cd $(workspaces.source.path)\ContainerFile
-        pwd
-        ls -l
+        cd $(workspaces.source.path)/ContainerFile
         buildah --storage-driver=$(params.STORAGE_DRIVER) bud \
           $(params.BUILD_EXTRA_ARGS) --format=$(params.FORMAT) \
           --tls-verify=$(params.TLSVERIFY) --no-cache \
