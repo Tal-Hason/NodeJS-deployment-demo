@@ -1,1 +1,5 @@
-NodeJS Deployment with Tekton-Pipeline & ArgoCD With Helm Chart
+# NodeJS Deployment with Tekton-Pipeline & ArgoCD With Helm Chart #
+
+![CICD](GitOps-RedHat.png)
+## Prequsitse ##
+
