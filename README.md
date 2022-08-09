@@ -4,8 +4,8 @@
 ## Prepare Work Enviourment ##
 * Have Openshift 4.10 Platform
 * Installed:
-    Openshift Git-Ops Operator
-    Openshift Pipeline Operator
+    - Openshift Git-Ops Operator
+    - Openshift Pipeline Operator
 * VScode
 
 
